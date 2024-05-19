@@ -98,9 +98,18 @@ namespace File_Automation
 
         private void button3_Click(object sender, EventArgs e)
         {
-            listBox1.ClearSelected();
+            listBox1.Items.Clear();
             textBox1.Clear();
             textBox2.Clear();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (listBox1.Items.Count > 0)
+            {
+                listBox1.Items.RemoveAt(listBox1.Items.Count - 1);
+            }
+
         }
     }
 }
