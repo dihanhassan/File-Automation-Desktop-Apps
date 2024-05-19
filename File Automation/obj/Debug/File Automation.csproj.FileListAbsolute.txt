@@ -1,0 +1,10 @@
+C:\Users\TN-99347\Desktop\SignalR\File Automation\File Automation\bin\Debug\File Automation.exe.config
+C:\Users\TN-99347\Desktop\SignalR\File Automation\File Automation\bin\Debug\File Automation.exe
+C:\Users\TN-99347\Desktop\SignalR\File Automation\File Automation\bin\Debug\File Automation.pdb
+C:\Users\TN-99347\Desktop\SignalR\File Automation\File Automation\obj\Debug\File Automation.csproj.AssemblyReference.cache
+C:\Users\TN-99347\Desktop\SignalR\File Automation\File Automation\obj\Debug\File_Automation.Form1.resources
+C:\Users\TN-99347\Desktop\SignalR\File Automation\File Automation\obj\Debug\File_Automation.Properties.Resources.resources
+C:\Users\TN-99347\Desktop\SignalR\File Automation\File Automation\obj\Debug\File Automation.csproj.GenerateResource.cache
+C:\Users\TN-99347\Desktop\SignalR\File Automation\File Automation\obj\Debug\File Automation.csproj.CoreCompileInputs.cache
+C:\Users\TN-99347\Desktop\SignalR\File Automation\File Automation\obj\Debug\File Automation.exe
+C:\Users\TN-99347\Desktop\SignalR\File Automation\File Automation\obj\Debug\File Automation.pdb
