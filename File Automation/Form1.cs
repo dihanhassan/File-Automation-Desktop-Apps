@@ -2,17 +2,19 @@
 using System.IO;
 using System.Runtime.InteropServices.ComTypes;
 using System.Windows.Forms;
-
+using System.Linq;
 namespace File_Automation
 {
     public partial class Form1 : Form
     {
         private FolderBrowserDialog folderBrowserDialog1;
+        private OpenFileDialog openFileDialog1;
 
         public Form1()
         {
             InitializeComponent();
             folderBrowserDialog1 = new FolderBrowserDialog();
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -20,57 +22,50 @@ namespace File_Automation
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
                 textBox1.Text = folderBrowserDialog1.SelectedPath;
+
+                foreach (string folderPath in folderBrowserDialog1.SelectedPath.Split(';'))
+                {
+                    listBox1.Items.Add(folderPath); // Add selected paths to the list box
+                }
+
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string folderPath = textBox1.Text;
-            
-            double days = Convert.ToDouble(textBox2.Text);
-
-           
-            if (Directory.Exists(folderPath))
+            foreach (var item in listBox1.Items)
             {
-                try
+                string folderPath = item.ToString();
+
+                double days = Convert.ToDouble(textBox2.Text);
+
+                if (Directory.Exists(folderPath))
                 {
-          
-                    string[] files = Directory.GetFiles(folderPath);
-
-     
-                    int timeZoneOffsetHours = 6;
-
-                
-                    DateTime utcTime = DateTime.UtcNow;
-
-                
-                    TimeSpan timeZoneOffset = TimeSpan.FromHours(timeZoneOffsetHours);
-
-                   
-                    DateTime today = utcTime + timeZoneOffset;
-
-                 
-                    foreach (string file in files)
+                    try
                     {
-                        /*    DateTime creationDate = File.GetCreationTime(file);
-                            DateTime modification = File.GetLastWriteTime(file);*/
-                        DateTime creationDate = File.GetLastWriteTime(file);
-                        if ((Double)((today-creationDate).TotalDays) >= days)
-                        {
-                            File.Delete(file);
-                        }
-                    }
+                        string[] files = Directory.GetFiles(folderPath);
+                        DateTime today = DateTime.Now;
 
-                    MessageBox.Show("successfully Deleted.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        foreach (string file in files)
+                        {
+                            DateTime creationDate = File.GetLastWriteTime(file);
+                            if ((DateTime.Now - creationDate).TotalDays >= days)
+                            {
+                                File.Delete(file);
+                            }
+                        }
+
+                        MessageBox.Show($"Successfully Deleted files in '{folderPath}'.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"An error occurred while deleting files in '{folderPath}': " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show("An error occurred while deleting files: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"The specified folder '{folderPath}' does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
-            else
-            {
-                MessageBox.Show("The specified folder does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -96,5 +91,16 @@ namespace File_Automation
             }
         }
 
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            listBox1.ClearSelected();
+            textBox1.Clear();
+            textBox2.Clear();
+        }
     }
 }
