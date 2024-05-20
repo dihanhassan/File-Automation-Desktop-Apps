@@ -3,6 +3,7 @@ using System.IO;
 using System.Runtime.InteropServices.ComTypes;
 using System.Windows.Forms;
 using System.Linq;
+using System.Collections.Generic;
 namespace File_Automation
 {
     public partial class Form1 : Form
@@ -22,7 +23,9 @@ namespace File_Automation
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
                 textBox1.Text = folderBrowserDialog1.SelectedPath;
-                listBox1.Items.Add(textBox1.Text);
+                //listBox1.Items.Add(textBox1.Text);
+                if(!checkedListBox1.Items.Contains(textBox1.Text))
+                     checkedListBox1.Items.Add(textBox1.Text);
 
                 /* foreach (string folderPath in folderBrowserDialog1.SelectedPath.Split(';'))
                  {
@@ -34,7 +37,8 @@ namespace File_Automation
 
         private void button2_Click(object sender, EventArgs e)
         {
-            foreach (var item in listBox1.Items)
+           // foreach (var item in listBox1.Items)
+            foreach (var item in checkedListBox1.Items)
             {
                 string folderPath = item.ToString();
 
@@ -51,7 +55,7 @@ namespace File_Automation
                     try
                     {
                         string[] files = Directory.GetFiles(folderPath);
-                        DateTime today = DateTime.Now;
+                  
 
                         foreach (string file in files)
                         {
@@ -98,28 +102,44 @@ namespace File_Automation
             }
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+      /*  private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-        }
+        }*/
 
         private void button3_Click(object sender, EventArgs e)
         {
-            listBox1.Items.Clear();
+            checkedListBox1.Items.Clear();  
+          //  listBox1.Items.Clear();
             textBox1.Clear();
             textBox2.Clear();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (listBox1.Items.Count > 0)
+            // Create a list to hold the items to be removed
+            var itemsToRemove = new List<object>();
+
+            // Iterate through the checked items and add them to the list
+            foreach (var item in checkedListBox1.CheckedItems)
             {
-                listBox1.Items.RemoveAt(listBox1.Items.Count - 1);
+                itemsToRemove.Add(item);
             }
+
+            // Remove the items from the CheckedListBox
+            foreach (var item in itemsToRemove)
+            {
+                checkedListBox1.Items.Remove(item);
+            }
+        }
+
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
 
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
