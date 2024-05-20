@@ -22,11 +22,12 @@ namespace File_Automation
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
                 textBox1.Text = folderBrowserDialog1.SelectedPath;
+                listBox1.Items.Add(textBox1.Text);
 
-                foreach (string folderPath in folderBrowserDialog1.SelectedPath.Split(';'))
-                {
-                    listBox1.Items.Add(folderPath); // Add selected paths to the list box
-                }
+                /* foreach (string folderPath in folderBrowserDialog1.SelectedPath.Split(';'))
+                 {
+                     listBox1.Items.Add(folderPath); // Add selected paths to the list box
+                 }*/
 
             }
         }
@@ -36,6 +37,12 @@ namespace File_Automation
             foreach (var item in listBox1.Items)
             {
                 string folderPath = item.ToString();
+
+                if(string.IsNullOrEmpty(textBox2.Text))
+                {
+                    MessageBox.Show("Please enter the number of days to delete files older than.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
                 double days = Convert.ToDouble(textBox2.Text);
 
@@ -109,6 +116,11 @@ namespace File_Automation
             {
                 listBox1.Items.RemoveAt(listBox1.Items.Count - 1);
             }
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
 
         }
     }
